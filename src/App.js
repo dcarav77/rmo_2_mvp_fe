@@ -9,6 +9,7 @@ function App() {
 
   const handleFetchData = async () => {
     const data = await fetchTechnicalObjects();
+    console.log('Technical Objects:', data);
     setTechnicalObjects(data);
     setDataFetched(true);
   };
