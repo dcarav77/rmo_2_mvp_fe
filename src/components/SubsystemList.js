@@ -5,12 +5,12 @@ const SubsystemList = ({ subsystems }) => {
     <ul>
       {subsystems.map(subsystem => (
         <li key={subsystem.id}>
-          <p>Name: {subsystem.name}</p>
-          <p>Status: {subsystem.status}</p>
-          <p>Part Number: {subsystem.part_number}</p>
-          <p>Location: {subsystem.location}</p>
-          <p>Repair Classification: {subsystem.repair_classification}</p>
-          {subsystem.repair_vendor && <p>Repair Vendor: {subsystem.repair_vendor}</p>}
+          <p>Name: {subsystem.name || 'Unknown Part'}</p>
+          <p>Status: {subsystem.status || 'Unknown'}</p>
+          <p>Part Number: {subsystem.part_number || 'N/A'}</p>
+          <p>Location: {subsystem.location || 'Unknown Location'}</p>
+          <p>Repair Classification: {subsystem.repair_classification || 'N/A'}</p>
+          {subsystem.repair_vendor ? <p>Repair Vendor: {subsystem.repair_vendor}</p> : null}
         </li>
       ))}
     </ul>
