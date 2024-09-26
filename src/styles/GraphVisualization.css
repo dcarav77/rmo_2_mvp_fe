@@ -1,0 +1,8 @@
+/* Styling for the Cytoscape container */
+#cy {
+    width: 100%; /* Ensure full width of the container */
+    height: 600px; /* Fixed height */
+    border: 1px solid #ccc; /* Optional: Visual clarity */
+    margin: 0 auto; /* Center the graph */
+  }
+  
