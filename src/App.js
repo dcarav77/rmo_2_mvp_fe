@@ -1,35 +1,37 @@
-import React, { useState } from 'react';
-import '../src/styles/App.css';
-import TechnicalObjectList from './components/TechnicalObjectList';
-import SubsystemList from './components/SubsystemList';
-import { fetchTechnicalObjects, fetchSubsystems  } from './services/api';
+import React, { useState, useEffect } from 'react';
+import './styles/App.css';
+import { fetchAircraft, fetchMaintenanceEvents, fetchTechnicians, fetchSchedules } from './services/api';
+import GraphVisualization from './components/GraphVisualization';
+import { transformGraphData } from './services/transformGraphData';
 
 function App() {
-  const [technicalObjects, setTechnicalObjects] = useState([]);
-  const [subsystems, setSubsystems] = useState([]); 
-  const [dataFetched, setDataFetched] = useState(false);
+  const [elements, setElements] = useState([]);
 
-  const handleFetchData = async () => {
-    const data = await fetchTechnicalObjects();
-    const subsystemsData = await fetchSubsystems();
-    
-    console.log('Technical Objects:', data);
-    setTechnicalObjects(data);
-    setSubsystems(subsystemsData);
-    setDataFetched(true);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const maintenanceEvents = await fetchMaintenanceEvents();
+      const technicians = await fetchTechnicians();
+      const schedules = await fetchSchedules(); 
+      const aircrafts = await fetchAircraft(); // Fetch aircrafts
+
+      console.log('Fetched Maintenance Events: ', maintenanceEvents);
+      console.log('Fetched Technicians: ', technicians);
+
+      // Transform data into Cytoscape elements
+      const transformedElements = await transformGraphData(maintenanceEvents, technicians, schedules, aircrafts);
+
+      // Set elements for Cytoscape visualization
+      setElements(transformedElements);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Technical Objects and Subsystems</h1>
-        <button onClick={handleFetchData}>Fetch Data</button>
-        {dataFetched && (
-          <>
-            <TechnicalObjectList technicalObjects={technicalObjects} />
-            <SubsystemList subsystems={subsystems} /> {/* Render SubsystemList */}
-          </>
-        )}
+        <h1>Maintenance and Technician Graph</h1>
+        <GraphVisualization elements={elements} />
       </header>
     </div>
   );
