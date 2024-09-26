@@ -1,30 +1,3 @@
-// Fetch all technical objects (ensure the endpoint is correct on the backend)
-export const fetchTechnicalObjects = async () => {
-  try {
-    const response = await fetch('http://127.0.0.1:5000/technical_objects');
-    if (!response.ok) throw new Error('Failed to fetch technical objects');
-    const data = await response.json();
-    console.log('Fetched Technical Objects:', data);
-    return data;
-  } catch (error) {
-    console.error('Error fetching technical objects:', error);
-    return [];
-  }
-};
-
-// Fetch all subsystems (you can remove if not needed)
-export const fetchSubsystems = async () => {
-  try {
-    const response = await fetch('http://127.0.0.1:5000/subsystems');
-    if (!response.ok) throw new Error('Failed to fetch subsystems');
-    const data = await response.json();
-    console.log('Fetched Subsystems:', data);
-    return data;
-  } catch (error) {
-    console.error('Error fetching subsystems:', error);
-    return [];
-  }
-};
 
 // Fetch all parts from Flask API
 export const fetchParts = async () => {
