@@ -1,4 +1,3 @@
-
 // Fetch all parts from Flask API
 export const fetchParts = async () => {
   try {
@@ -80,6 +79,23 @@ export const fetchSchedules = async () => {
     return data;
   } catch (error) {
     console.error('Error fetching schedules:', error);
+    return [];
+  }
+};
+
+// Fetch all relationships from Flask API
+export const fetchRelationships = async () => {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/relationships', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) throw new Error('Failed to fetch relationships');
+    const data = await response.json();
+    console.log('Fetched Relationships:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching relationships:', error);
     return [];
   }
 };
